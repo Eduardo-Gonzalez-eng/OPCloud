@@ -1,0 +1,16 @@
+wwwroot\assets\403.svg
+wwwroot\assets\logo.svg
+wwwroot\css\site.css
+wwwroot\favicon.ico
+wwwroot\index.html
+wwwroot\pro_icon.svg
+wwwroot\appsettings.Development.json
+wwwroot\appsettings.json
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\assets\403.svg
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\assets\logo.svg
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\css\site.css
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\favicon.ico
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\index.html
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\pro_icon.svg
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\appsettings.Development.json
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\appsettings.json

@@ -1,0 +1,2 @@
+wwwroot\app.css
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\wwwroot\app.css

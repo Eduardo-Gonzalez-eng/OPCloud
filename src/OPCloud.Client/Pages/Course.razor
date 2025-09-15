@@ -1,0 +1,70 @@
+﻿@page "/course"
+@inject HttpClient Http
+
+<GridContent></GridContent>
+
+<h3>Course</h3>
+
+<p>Valor actual: @serverValue</p>
+
+<label>
+    Paso:
+    <input type="number" @bind="step" style="width:80px" />
+</label>
+
+<button class="btn btn-primary" @onclick="Incrementar">Sumar 5</button>
+
+
+
+@code {
+    private int serverValue;
+    private int step = 5;
+    private bool autoRefresh = true;
+    private PeriodicTimer? timer;
+    private int refreshMs = 1000;
+    private CancellationTokenSource? cts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Cargar();
+        IniciarAutoRefresh();
+    }
+
+    private async Task Cargar()
+    {
+        var resp = await Http.GetFromJsonAsync<ServerCounterResponse>("api/counter");
+        serverValue = resp?.value ?? serverValue;
+        StateHasChanged();
+    }
+
+    private async Task Incrementar()
+    {
+        // Nota: enviamos el step por querystring para simplificar
+        var resp = await Http.PostAsync($"api/counter/increment?step={step}", content: null);
+        var data = await resp.Content.ReadFromJsonAsync<ServerCounterResponse>();
+        serverValue = data?.value ?? serverValue;
+    }
+
+    private void IniciarAutoRefresh()
+    {
+        cts = new CancellationTokenSource();
+        timer = new PeriodicTimer(TimeSpan.FromMilliseconds(refreshMs));
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                while (await timer!.WaitForNextTickAsync(cts.Token))
+                {
+                    await InvokeAsync(Cargar);
+                }
+            }
+            catch { /* cancelado */ }
+        });
+        autoRefresh = true;
+    }
+
+    private class ServerCounterResponse
+    {
+        public int value { get; set; }
+    }
+}
