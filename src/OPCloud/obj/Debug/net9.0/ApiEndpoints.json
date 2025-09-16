@@ -1,38 +1,96 @@
 [
   {
-    "ContainingType": "Program\u002B\u003C\u003Ec",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_1",
-    "RelativePath": "api/counter",
+    "ContainingType": "OPCloud.Controllers.InstrumentController",
+    "Method": "Get",
+    "RelativePath": "api/Instrument",
     "HttpMethod": "GET",
-    "IsController": false,
+    "IsController": true,
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[OPCloud.Models.InstrumentData, OPCloud, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       }
     ]
   },
   {
-    "ContainingType": "Program\u002B\u003C\u003Ec",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_2",
-    "RelativePath": "api/counter/increment",
+    "ContainingType": "OPCloud.Controllers.InstrumentController",
+    "Method": "Post",
+    "RelativePath": "api/Instrument",
     "HttpMethod": "POST",
-    "IsController": false,
+    "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "step",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
+        "Name": "dataList",
+        "Type": "System.Collections.Generic.List\u00601[[OPCloud.Models.InstrumentData, OPCloud, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OPCloud.Controllers.InstrumentController",
+    "Method": "GetBuffer",
+    "RelativePath": "api/Instrument/buffer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[OPCloud.Models.InstrumentData, OPCloud, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "OPCloud.Controllers.InstrumentController",
+    "Method": "GetTodayCount",
+    "RelativePath": "api/Instrument/mongocount",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Int64",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "OPCloud.Controllers.InstrumentController",
+    "Method": "GetTodayData",
+    "RelativePath": "api/Instrument/today",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[OPCloud.Models.InstrumentData, OPCloud, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       }
     ]

@@ -28,8 +28,16 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0c1xCYXNpY0xheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Pages/Apidashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBpZGFzaGJvYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Pages/Course.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291cnNlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Pages/Datebase.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0ZWJhc2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Routes.razor]

@@ -1,9 +1,13 @@
+﻿using AntDesign.ProLayout;
 using OPCloud.Client.Pages;
+using OPCloud.Client.Services;
 using OPCloud.Components;
-using AntDesign.ProLayout;
 using OPCloud.Services;
+using OPCloud.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -13,7 +17,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAntDesign();
-builder.Services.AddSingleton<CounterState>();
+
 
 builder.Services.AddScoped(sp =>
 {
@@ -31,21 +35,18 @@ builder.Services.AddScoped(sp =>
 OPCloud.Program.AddClientServices(builder.Services);
 
 builder.Services.Configure<ProSettings>(builder.Configuration.GetSection("ProSettings"));
+builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
+
+builder.Services.AddSingleton<InstrumentBufferData>();
+builder.Services.AddSingleton<MongoService>();
+//builder.Services.AddScoped<SignalRService>();
+builder.Services.AddScoped<SensorService>();
+
 
 var app = builder.Build();
 
-// Endpoints m�nimos para el contador
-app.MapGet("/api/counter", (CounterState state) =>
-{
-    return Results.Ok(new { value = state.Get() });
-});
-
-app.MapPost("/api/counter/increment", (CounterState state, int? step) =>
-{
-    var newValue = state.Increment(step ?? 1);
-    return Results.Ok(new { value = newValue });
-});
-
+app.MapControllers();
+app.MapHub<InstrumentHub>("/instrumentHub"); // 👈 ruta del hub
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

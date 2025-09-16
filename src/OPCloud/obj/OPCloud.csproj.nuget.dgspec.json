@@ -71,6 +71,10 @@
               "target": "Package",
               "version": "[9.0.0, )"
             },
+            "Microsoft.AspNetCore.SignalR.Client": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
             "Microsoft.Extensions.Http": {
               "target": "Package",
               "version": "[9.0.0, )"
@@ -180,6 +184,10 @@
             "Microsoft.AspNetCore.Components.WebAssembly.Server": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.5.0, )"
             }
           },
           "imports": [
