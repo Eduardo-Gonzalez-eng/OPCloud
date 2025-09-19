@@ -1,0 +1,43 @@
+﻿[
+  {
+    "path": "/dashboard",
+    "name": "Visores tiempo real",
+    "key": "dashboard",
+    "icon": "dashboard",
+    "children": [
+      {
+        "path": "/dashboard/apiviewer",
+        "name": "Visor Api",
+        "key": "dashboard.analysis"
+      },
+      {
+        "path": "/dashboard/databaseviewer",
+        "name": "Base de datos",
+        "key": "dashboard.databaseviewer"
+      }
+    ]
+  },
+  {
+    "path": "/account",
+    "name": "Cuenta",
+    "key": "account",
+    "icon": "user",
+    "children": [
+      {
+        "path": "/account/center",
+        "name": "Account Center",
+        "key": "account.center"
+      },
+      {
+        "path": "/account/settings",
+        "name": "Personal settings",
+        "key": "account.settings"
+      },
+      {
+        "path": "/account/crud",
+        "name": "Test cuentas",
+        "key": "account.crud"
+      }
+    ]
+  }
+]

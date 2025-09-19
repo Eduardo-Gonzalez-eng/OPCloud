@@ -12,17 +12,18 @@ namespace OPCloud.Layouts
 
         [Inject] private ReuseTabsService TabService { get; set; }
 
+        [Inject] private HttpClient HttpClient { get; set; }
+
+        [Inject] private ILocalizationService LocalizationService { get; set; }
+
+        private EventHandler<CultureInfo> _localizationChanged;
+
+
         protected override async Task OnInitializedAsync()
         {
-            _menuData = new[] {
-                new MenuDataItem
-                {
-                    Path = "/",
-                    Name = "welcome",
-                    Key = "welcome",
-                    Icon = "smile",
-                }
-            };
+            _localizationChanged = (sender, args) => InvokeAsync(StateHasChanged);
+            LocalizationService.LanguageChanged += _localizationChanged;
+            _menuData = await HttpClient.GetFromJsonAsync<MenuDataItem[]>("data/menu.json");
         }
 
         void Reload()
@@ -32,7 +33,7 @@ namespace OPCloud.Layouts
 
         public void Dispose()
         {
-            
+            LocalizationService.LanguageChanged -= _localizationChanged;
         }
 
     }

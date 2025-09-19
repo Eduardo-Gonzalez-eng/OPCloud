@@ -114,3 +114,12 @@ C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\bin\Debug\ne
 C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\bin\Debug\net9.0\SharpCompress.dll
 C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\bin\Debug\net9.0\Snappier.dll
 C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\bin\Debug\net9.0\ZstdSharp.dll
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\obj\Debug\net9.0\compressed\6obub7v6rd-vtw0e19gxn.gz
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\obj\Debug\net9.0\compressed\0pe1bwlgx4-c9zse6ao4i.gz
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\obj\Debug\net9.0\compressed\oggp599p5r-kwwo4gruhb.gz
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\obj\Debug\net9.0\compressed\77671726e1-rycz8uakn5.gz
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\obj\Debug\net9.0\compressed\gtq14tbftr-nc7gfdqpjo.gz
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\obj\Debug\net9.0\compressed\du49i3eag2-j1hgnugts8.gz
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\obj\Debug\net9.0\compressed\vyzwfk31lc-f92aksmbma.gz
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\obj\Debug\net9.0\compressed\0w28u4l20x-2hy26et8p7.gz
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud\obj\Debug\net9.0\compressed\87n3bi4klz-0ry7n3vfac.gz

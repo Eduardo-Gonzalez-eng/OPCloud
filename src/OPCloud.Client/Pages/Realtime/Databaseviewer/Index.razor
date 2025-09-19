@@ -1,0 +1,120 @@
+﻿@page "/dashboard/databaseviewer"
+
+@using Microsoft.AspNetCore.SignalR.Client
+@using OPCloud.Client.Models
+@using OPCloud.Client.Services
+@using AntDesign
+@using AntDesign.TableModels
+@using System.Diagnostics
+@inject SensorService SensorService
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<div class="site-statistic-demo-card">
+    <Row Gutter="16">
+        <Col Span="12">
+        <Card>
+            <Statistic Title="Active" Value="@cnt" Precision="0" ValueStyle="color: #3f8600;" Suffix="C/U">
+                <PrefixTemplate>
+                    <span><Icon Type="@IconType.Outline.ArrowUp" /></span>
+                </PrefixTemplate>
+            </Statistic>
+        </Card>
+        </Col>
+    </Row>
+</div>
+
+<!-- 👉 Tabla con GenerateColumns -->
+<Table @ref="_table"
+       TItem="InstrumentData"
+       PageSize="5"
+       Total="_total"
+       DataSource="_dataSource"
+       @bind-SelectedRows="_selectedRows"
+       OnChange="OnChange">
+
+    <TitleTemplate>
+        <Flex Justify="FlexJustify.End" Gap="@("10")">
+            <Button Type="ButtonType.Primary" OnClick="() => StartEdit(default)">New</Button>
+            <Button Disabled="!_selectedRows.Any()" Danger OnClick="DeleteAll">Delete</Button>
+        </Flex>
+    </TitleTemplate>
+
+    <ColumnDefinitions Context="row">
+        <Selection />
+        <GenerateColumns Definitions="@((n, c) => { c.Filterable = true; c.Sortable = true; })" />
+        <ActionColumn Title="Action">
+            <a @onclick="() => StartEdit(row)">Edit</a>
+            <a @onclick="() => Delete(row)">Delete</a>
+        </ActionColumn>
+    </ColumnDefinitions>
+</Table>
+
+@code {
+    private long cnt = 0;
+    private HubConnection hubConnection;
+
+    private ITable _table;
+    private List<InstrumentData> _dataSource = new();
+    private IEnumerable<InstrumentData> _selectedRows = [];
+    private int _total;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/instrumentHub"))
+            .WithAutomaticReconnect()
+            .Build();
+
+        hubConnection.On<long>("NewMongoDBSet", async (counterDay) =>
+        {
+            Trace.WriteLine("Nuevo dato almacenado MongoDB");
+            cnt = counterDay;
+            await InvokeAsync(StateHasChanged);
+        });
+
+        await hubConnection.StartAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            cnt = await SensorService.GetTodayMongoCountAsync();
+
+            var initialBuffer = await HttpClient.GetFromJsonAsync<List<InstrumentData>>("api/instrument/today");
+            if (initialBuffer != null)
+            {
+                _dataSource = initialBuffer;
+                _total = _dataSource.Count;
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    void OnChange(QueryModel<InstrumentData> query)
+    {
+        _total = _dataSource.AsQueryable().ExecuteTableQuery(query).Count();
+        _dataSource = _dataSource.AsQueryable().ExecuteTableQuery(query).CurrentPagedRecords(query).ToList();
+    }
+
+    void StartEdit(InstrumentData row)
+    {
+        // 👉 Aquí puedes abrir un modal como en tu ejemplo (no lo implemento completo para no alargar).
+        Trace.WriteLine($"Editar {row?.NombreSensor ?? "Nuevo"}");
+    }
+
+    void Delete(InstrumentData row)
+    {
+        _dataSource = _dataSource.Except(new[] { row }).ToList();
+        _table.ReloadData();
+    }
+
+    void DeleteAll()
+    {
+        _dataSource = _dataSource.Except(_selectedRows).ToList();
+        _selectedRows = [];
+        _table.ReloadData();
+    }
+}

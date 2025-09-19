@@ -1,0 +1,9 @@
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\data\activities.json
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\data\advanced.json
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\data\basic.json
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\data\current_user.json
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\data\fake_chart_data.json
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\data\fake_list.json
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\data\menu.json
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\data\notice.json
+C:\Users\eduar\OneDrive\Documentos\GithubNebral\OPCloud\src\OPCloud.Client\wwwroot\data\notices.json

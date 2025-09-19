@@ -24,20 +24,28 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Components/GlobalHeader/RightContent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xHbG9iYWxIZWFkZXJcUmlnaHRDb250ZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Layouts/BasicLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0c1xCYXNpY0xheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Pages/Apidashboard.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBpZGFzaGJvYXJkLnJhem9y
+[C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Pages/Account/Crud/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxDcnVkXEluZGV4LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Pages/Course.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291cnNlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Pages/Datebase.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0ZWJhc2UucmF6b3I=
+[C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Pages/Realtime/Apiviewer/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVhbHRpbWVcQXBpdmlld2VyXEluZGV4LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Pages/Realtime/Databaseviewer/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVhbHRpbWVcRGF0YWJhc2V2aWV3ZXJcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/eduar/OneDrive/Documentos/GithubNebral/OPCloud/src/OPCloud.Client/Routes.razor]

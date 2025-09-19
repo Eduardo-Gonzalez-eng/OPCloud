@@ -1,0 +1,177 @@
+﻿@page "/account/crud"
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+@implements IDisposable
+
+<h3>Login con Email y Contraseña</h3>
+
+<input @bind="email" placeholder="Correo" />
+<input @bind="password" type="password" placeholder="Contraseña" />
+
+<button @onclick="Register" disabled="@(!isJSReady)">Registrar</button>
+<button @onclick="Login" disabled="@(!isJSReady)">Iniciar Sesión</button>
+
+<p>Hora actual: @currentTime</p>
+<p>Usuario: @(currentUser?.Email ?? "No autenticado")</p>
+
+@code {
+    private string email;
+    private string password;
+    private string currentTime = "Cargando...";
+    private bool isJSReady = false;
+    private CurrentUser currentUser;
+
+    public class CurrentUser
+    {
+        public string Uid { get; set; }
+        public string Email { get; set; }
+        public string DisplayName { get; set; }
+        public bool EmailVerified { get; set; }
+    }
+
+    public class AuthResult
+    {
+        public bool Success { get; set; }
+        public CurrentUser User { get; set; }
+        public AuthError Error { get; set; }
+    }
+
+    public class AuthError
+    {
+        public string Code { get; set; }
+        public string Message { get; set; }
+        public string Details { get; set; }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await InitializeJavaScript();
+        }
+    }
+
+    private async Task InitializeJavaScript()
+    {
+        try
+        {
+            // Verificar que JavaScript esté inicializado
+            isJSReady = await JS.InvokeAsync<bool>("initializeBlazorInterop");
+
+            if (isJSReady)
+            {
+                await LoadCurrentTime();
+                await SetupAuthListener();
+                //StateHasChanged();
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error inicializando JavaScript: {ex.Message}");
+        }
+    }
+
+    private async Task LoadCurrentTime()
+    {
+        try
+        {
+            currentTime = await JS.InvokeAsync<string>("FirebaseInterop.getCurrentTime");
+        }
+        catch (Exception ex)
+        {
+            currentTime = $"Error: {ex.Message}";
+        }
+    }
+
+    private async Task SetupAuthListener()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("FirebaseInterop.onAuthStateChange", Microsoft.JSInterop.DotNetObjectReference.Create(this));
+        }
+        catch (Exception ex)
+        {
+            // Usar parámetros fuertemente tipados en lugar de dinámicos
+            await ShowNotification($"Error setting up auth listener: {ex.Message}", "error");
+        }
+    }
+
+    [JSInvokable]
+    public async Task OnAuthStateChanged(CurrentUser user)
+    {
+        currentUser = user;
+        await InvokeAsync(StateHasChanged);
+
+        if (user != null)
+        {
+            await ShowNotification($"Bienvenido {user.Email}", "success");
+        }
+    }
+
+    // Método auxiliar para mostrar notificaciones (fuertemente tipado)
+    private async Task ShowNotification(string message, string type = "info")
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("FirebaseInterop.showNotification", message, type);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error showing notification: {ex.Message}");
+        }
+    }
+
+    private async Task Register()
+    {
+        if (!isJSReady) return;
+
+        try
+        {
+            // Usar tipo específico en lugar de dynamic
+            var result = await JS.InvokeAsync<AuthResult>("FirebaseInterop.createUser", email, password);
+
+            if (result.Success)
+            {
+                await ShowNotification("Usuario creado exitosamente", "success");
+            }
+            else
+            {
+                await ShowNotification(result.Error?.Details ?? "Error desconocido", "error");
+            }
+        }
+        catch (Exception ex)
+        {
+            await ShowNotification($"Error: {ex.Message}", "error");
+        }
+    }
+
+    private async Task Login()
+    {
+        if (!isJSReady) return;
+
+        try
+        {
+            // Usar tipo específico en lugar de dynamic
+            var result = await JS.InvokeAsync<AuthResult>("FirebaseInterop.signIn", email, password);
+
+            if (result.Success)
+            {
+                await ShowNotification("Sesión iniciada", "success");
+            }
+            else
+            {
+                await ShowNotification(result.Error?.Details ?? "Error desconocido", "error");
+            }
+        }
+        catch (Exception ex)
+        {
+            await ShowNotification($"Error: {ex.Message}", "error");
+        }
+    }
+
+    public void Dispose()
+    {
+        
+    }
+}

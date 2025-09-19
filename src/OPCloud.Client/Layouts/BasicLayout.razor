@@ -1,89 +1,39 @@
 ﻿@namespace OPCloud.Layouts
 @inherits LayoutComponentBase
 
-<Layout Class="layout">
-    <Header Class="header">
-        <div class="logo" />
-        <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Horizontal" DefaultSelectedKeys=@(new []{"2"})>
-            <MenuItem Key="1" RouterLink="/">Welcome</MenuItem>
-            <MenuItem Key="2"RouterLink="/ant">Ant design</MenuItem>
-        </Menu>
-    </Header>
-    <Layout>
-        <Sider Width="200" Class="site-layout-background">
-            <Menu Mode="MenuMode.Inline"
-                  DefaultSelectedKeys=@(new[] {"1"})
-                  DefaultOpenKeys=@(new[] {"sub1"})
-                  Style="height: 100%; border-right: 0;">
-                @{
-                    RenderFragment sub1Title =
-                    @<span>
-                        <Icon Type="@IconType.Outline.User" />
-                        subnav 1
-                    </span>;
-                }
-                <SubMenu Key="sub1" TitleTemplate=sub1Title>
-                    <MenuItem RouterLink="/" Key="1">Welcome</MenuItem>
-                    <MenuItem RouterLink="/ant" Key="2">Ant design</MenuItem>
-                     <MenuItem RouterLink="/apidashboard" Key="4">Api viewer</MenuItem>
-                    <MenuItem RouterLink="/database" Key="3">Base de datos</MenuItem>
-                </SubMenu>
-                @{
-                    RenderFragment sub2Title =
-                    @<span>
-                        <Icon Type="@IconType.Outline.Laptop" />
-                        subnav 2
-                    </span>;
-                }
-                <SubMenu Key="sub2" TitleTemplate=sub2Title>
-                    <MenuItem Key="5">option5</MenuItem>
-                    <MenuItem Key="6">option6</MenuItem>
-                    <MenuItem Key="7">option7</MenuItem>
-                    <MenuItem Key="8">option8</MenuItem>
-                </SubMenu>
-                @{
-                    RenderFragment sub3Title =
-                    @<span>
-                        <Icon Type="@IconType.Outline.Notification" />
-                        subnav 3
-                    </span>;
-                }
-                <SubMenu Key="sub3" TitleTemplate=sub3Title>
-                    <MenuItem Key="9">option9</MenuItem>
-                    <MenuItem Key="10">option10</MenuItem>
-                    <MenuItem Key="11">option11</MenuItem>
-                    <MenuItem Key="12">option12</MenuItem>
-                </SubMenu>
-            </Menu>
-        </Sider>
-        <Layout Style=" padding: 0 24px 24px;">
-            <Breadcrumb Style="margin: 16px 0;">
-                <BreadcrumbItem>Home</BreadcrumbItem>
-                <BreadcrumbItem>List</BreadcrumbItem>
-                <BreadcrumbItem>App</BreadcrumbItem>
-            </Breadcrumb>
-            <Content Class="site-layout-background" Style=" padding: 24px; margin: 0; min-height: 280px;">
-                @Body
-            </Content>
-        </Layout>
-    </Layout>
-</Layout>
+<AntDesign.ProLayout.BasicLayout 
+    Logo="@("https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg")"
+    MenuData="_menuData"
+    MenuAccordion
+    @bind-Collapsed="collapsed">
+    <HeaderContentRender>
+        <Space Size="@("24")">
+            <SpaceItem>
+                <Icon Class="action" Type="@(collapsed?"menu-unfold":"menu-fold")" OnClick="Toggle" />
+            </SpaceItem>
+            <SpaceItem>
+                <Icon Class="action" Type="reload" Theme="@IconThemeType.Outline" OnClick="Reload" />
+            </SpaceItem>
+        </Space>
+    </HeaderContentRender>
+    <RightContentRender>
+        <OPCloud.Client.Components.RightContent />
+    </RightContentRender>
+    <ChildContent>
+        <ReuseTabs></ReuseTabs>
+    </ChildContent>
+    <FooterRender>
+        <FooterView Copyright="2021 Ant Design Blazor" Links="Links"></FooterView>
+    </FooterRender>
+</AntDesign.ProLayout.BasicLayout>
 
-<style>
-    #components-layout-demo-top-side-2 .logo {
-        width: 120px;
-        height: 31px;
-        background: rgba(255, 255, 255, 0.2);
-        margin: 16px 28px 16px 0;
-        float: left;
-    }
 
-    .site-layout-background {
-        background: #fff;
-    }
-</style>
+<SettingDrawer />
 
-@code{
+
+<script type="module" src="blazorInterop.js"></script>
+
+@code {
     bool collapsed;
 
     public LinkItem[] Links =

@@ -42,6 +42,13 @@ builder.Services.AddSingleton<MongoService>();
 //builder.Services.AddScoped<SignalRService>();
 builder.Services.AddScoped<SensorService>();
 
+builder.Services.AddInteractiveStringLocalizer();
+builder.Services.AddLocalization();
+builder.Services.AddScoped<IChartService, ChartService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 var app = builder.Build();
 
