@@ -1,8 +1,8 @@
 ﻿@namespace OPCloud.Layouts
 @inherits LayoutComponentBase
 
-<AntDesign.ProLayout.BasicLayout 
-    Logo="@("https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg")"
+<AntDesign.ProLayout.BasicLayout Logo="@("https://images.seeklogo.com/logo-png/48/1/mongodb-logo-png_seeklogo-481256.png")"
+    title="Mongo"
     MenuData="_menuData"
     MenuAccordion
     @bind-Collapsed="collapsed">
@@ -10,9 +10,6 @@
         <Space Size="@("24")">
             <SpaceItem>
                 <Icon Class="action" Type="@(collapsed?"menu-unfold":"menu-fold")" OnClick="Toggle" />
-            </SpaceItem>
-            <SpaceItem>
-                <Icon Class="action" Type="reload" Theme="@IconThemeType.Outline" OnClick="Reload" />
             </SpaceItem>
         </Space>
     </HeaderContentRender>

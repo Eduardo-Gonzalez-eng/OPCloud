@@ -3,6 +3,7 @@ import {
     createUser,
     signIn,
     logout,
+    updateDisplayName,
     getCurrentUser,
     onAuthStateChange,
     getCurrentTime,
@@ -18,6 +19,10 @@ window.FirebaseInterop = {
     // Auth functions
     createUser: async (email, password) => {
         return await createUser(email, password);
+    },
+
+    updateDisplayName: async (newName) => {
+        return await updateDisplayName(newName);
     },
 
     signIn: async (email, password) => {

@@ -27,6 +27,8 @@ namespace OPCloud
             builder.Services.AddInteractiveStringLocalizer();
             builder.Services.AddLocalization();
 
+            builder.Services.AddSingleton<UserState>();
+
             builder.Services.AddScoped<IChartService, ChartService>();
             builder.Services.AddScoped<IProjectService, ProjectService>();
             builder.Services.AddScoped<IUserService, UserService>();

@@ -14,8 +14,12 @@
 
     public class CurrentUser
     {
-        public string Name { get; set; }
+        public string Uid { get; set; }
+        public string Email { get; set; }
+        public string DisplayName { get; set; }
+        public bool EmailVerified { get; set; }
         public string Avatar { get; set; }
+        /*public string Name { get; set; }
         public string Userid { get; set; }
         public NoticeType[] Notice { get; set; } = { };
         public string Email { get; set; }
@@ -28,7 +32,7 @@
         public string Country { get; set; }
         public GeographicType Geographic { get; set; }
         public string Address { get; set; }
-        public string Phone { get; set; }
+        public string Phone { get; set; }*/
     }
 
     public class UserLiteItem

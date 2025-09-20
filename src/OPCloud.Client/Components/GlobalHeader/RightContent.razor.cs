@@ -13,7 +13,7 @@ namespace OPCloud.Client.Components
 {
     public partial class RightContent
     {
-        private CurrentUser _currentUser = new CurrentUser();
+        //private CurrentUser _currentUser = new CurrentUser();
         private NoticeIconData[] _notifications = { };
         private NoticeIconData[] _messages = { };
         private NoticeIconData[] _events = { };
@@ -48,9 +48,10 @@ namespace OPCloud.Client.Components
 
         [Inject] protected NavigationManager NavigationManager { get; set; }
 
-        [Inject] protected IUserService UserService { get; set; }
+        //[Inject] protected IUserService UserService { get; set; }
         [Inject] protected IProjectService ProjectService { get; set; }
         [Inject] protected MessageService MessageService { get; set; }
+        [Inject] protected UserState CurrentUserState { get; set; }
 
         [Inject] private IStringLocalizer<I18n> L { get; set; }
         [Inject] private ILocalizationService LocalizationService { get; set; }
@@ -59,12 +60,14 @@ namespace OPCloud.Client.Components
         {
             await base.OnInitializedAsync();
             SetClassMap();
-            _currentUser = await UserService.GetCurrentUserAsync();
+            //CurrentUserState = await UserService.GetCurrentUserAsync();
             var notices = await ProjectService.GetNoticesAsync();
             _notifications = notices.Where(x => x.Type == "notification").Cast<NoticeIconData>().ToArray();
             _messages = notices.Where(x => x.Type == "message").Cast<NoticeIconData>().ToArray();
             _events = notices.Where(x => x.Type == "event").Cast<NoticeIconData>().ToArray();
             _count = notices.Length;
+
+            CurrentUserState.OnChange += () => InvokeAsync(StateHasChanged);
         }
 
         protected void SetClassMap()
@@ -116,5 +119,11 @@ namespace OPCloud.Client.Components
         {
             MessageService.Info("Click on view more");
         }
+
+        public void Dispose()
+        {
+            CurrentUserState.OnChange -= StateHasChanged;
+        }
+
     }
 }

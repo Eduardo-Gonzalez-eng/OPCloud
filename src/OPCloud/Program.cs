@@ -37,6 +37,7 @@ OPCloud.Program.AddClientServices(builder.Services);
 builder.Services.Configure<ProSettings>(builder.Configuration.GetSection("ProSettings"));
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
 
+builder.Services.AddSingleton<UserState>();
 builder.Services.AddSingleton<InstrumentBufferData>();
 builder.Services.AddSingleton<MongoService>();
 //builder.Services.AddScoped<SignalRService>();

@@ -1,46 +1,139 @@
 ﻿@page "/account/crud"
+
+@using System.Text.Json;
+@using System.ComponentModel.DataAnnotations;
 @using Microsoft.JSInterop
+@using OPCloud.Client.Models
+@using OPCloud.Client.Services
+@inject UserState CurrentUserState
 @inject IJSRuntime JS
 @implements IDisposable
 
-<h3>Login con Email y Contraseña</h3>
 
-<input @bind="email" placeholder="Correo" />
-<input @bind="password" type="password" placeholder="Contraseña" />
 
-<button @onclick="Register" disabled="@(!isJSReady)">Registrar</button>
-<button @onclick="Login" disabled="@(!isJSReady)">Iniciar Sesión</button>
+<div class="login-container">
+    <Card Title="Actualizar nombre" Style="width:400px;" Hoverable="true">
+        <Form Model="@model"
+              OnFinish="OnFinish"
+              OnFinishFailed="OnFinishFailed"
+              LabelColSpan="8"
+              WrapperColSpan="16">
+            <FormItem Label="Nombre usuario">
+                <Input @bind-Value="context.DisplayName" Placeholder="Ingrese su usuario" />
+            </FormItem>
+       
+        
+            <FormItem WrapperColOffset="8" WrapperColSpan="16">
+                <Button Type="ButtonType.Primary" HtmlType="submit" @onclick="UpdateDisplayName" Block="true">
+                    Iniciar sesión
+                </Button>
+            </FormItem>
+        </Form>
+    </Card>
 
-<p>Hora actual: @currentTime</p>
-<p>Usuario: @(currentUser?.Email ?? "No autenticado")</p>
+    <Card Title="Iniciar sesión" Style="width:400px;" Hoverable="true">
+        <Form Model="@model"
+              OnFinish="OnFinish"
+              OnFinishFailed="OnFinishFailed"
+              LabelColSpan="8"
+              WrapperColSpan="16">
+            <FormItem Label="Usuario">
+                <Input @bind-Value="context.Username" Placeholder="Ingrese su usuario" />
+            </FormItem>
+            <FormItem Label="Contraseña">
+                <InputPassword @bind-Value="context.Password" Placeholder="Ingrese su contraseña" />
+            </FormItem>
+            <FormItem Label="" WrapperColOffset="8" WrapperColSpan="16">
+                <Checkbox @bind-Value="context.RememberMe">Recuérdame</Checkbox>
+            </FormItem>
+            <FormItem WrapperColOffset="8" WrapperColSpan="16">
+                <Button Type="ButtonType.Primary" HtmlType="submit" @onclick="Login" Block="true">
+                    Iniciar sesión
+                </Button>
+            </FormItem>
+        </Form>
+    </Card>
+
+    <Card Title="Cerrar sesión" Style="width:400px;" Hoverable="true" Class="logout-card">
+        <Button Type="ButtonType.Primary"
+                Icon="@IconType.Outline.Logout"
+                Size="ButtonSize.Large"
+                Shape="ButtonShape.Round"
+                @onclick="Logout"
+                Block="true">
+            Cerrar sesión
+        </Button>
+    </Card>
+
+    <div class="info-card">
+        <h3>Login con Email y Contraseña</h3>
+        <p><b>Hora actual:</b> @currentTime</p>
+        <p><b>Usuario:</b> @(currentUser?.Email ?? "No autenticado")</p>
+        <p><b>Nombre usuario:</b> @(currentUser?.DisplayName ?? "No autenticado")</p>
+    </div>
+</div>
+
+<style>
+    .login-container{
+        background:#ffffff;
+    }
+</style>
 
 @code {
-    private string email;
-    private string password;
+    ButtonSize _size = ButtonSize.Default;
+    FlexDirection direction = FlexDirection.Vertical;
+    private CurrentUser _currentUser = new CurrentUser();
+
+    public class Model
+    {
+        [Required]
+        public string Username { get; set; }
+        [Required]
+        public string Password { get; set; }
+        public string DisplayName { get; set; }
+        public bool RememberMe { get; set; } = true;
+    }
+
+    private Model model = new Model();
+
+    private void OnFinish(EditContext editContext)
+    {
+        Console.WriteLine($"Success:{JsonSerializer.Serialize(model)}");
+    }
+
+    private void OnFinishFailed(EditContext editContext)
+    {
+        Console.WriteLine($"Failed:{JsonSerializer.Serialize(model)}");
+    }
+
+    /// <summary>
+    /// NEW
+    /// </summary>
+
     private string currentTime = "Cargando...";
     private bool isJSReady = false;
     private CurrentUser currentUser;
 
-    public class CurrentUser
+    /*public class CurrentUser
     {
         public string Uid { get; set; }
-        public string Email { get; set; }
-        public string DisplayName { get; set; }
-        public bool EmailVerified { get; set; }
-    }
+    public string Email { get; set; }
+    public string DisplayName { get; set; }
+    public bool EmailVerified { get; set; }
+    }*/
 
     public class AuthResult
     {
-        public bool Success { get; set; }
-        public CurrentUser User { get; set; }
-        public AuthError Error { get; set; }
+    public bool Success { get; set; }
+    public CurrentUser User { get; set; }
+    public AuthError Error { get; set; }
     }
 
     public class AuthError
     {
-        public string Code { get; set; }
-        public string Message { get; set; }
-        public string Details { get; set; }
+    public string Code { get; set; }
+    public string Message { get; set; }
+    public string Details { get; set; }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -101,6 +194,8 @@
     public async Task OnAuthStateChanged(CurrentUser user)
     {
         currentUser = user;
+        CurrentUserState.SetUser(user);
+
         await InvokeAsync(StateHasChanged);
 
         if (user != null)
@@ -129,7 +224,7 @@
         try
         {
             // Usar tipo específico en lugar de dynamic
-            var result = await JS.InvokeAsync<AuthResult>("FirebaseInterop.createUser", email, password);
+            var result = await JS.InvokeAsync<AuthResult>("FirebaseInterop.createUser", model.Username, model.Password);
 
             if (result.Success)
             {
@@ -153,11 +248,59 @@
         try
         {
             // Usar tipo específico en lugar de dynamic
-            var result = await JS.InvokeAsync<AuthResult>("FirebaseInterop.signIn", email, password);
+            var result = await JS.InvokeAsync<AuthResult>("FirebaseInterop.signIn", model.Username, model.Password);
 
             if (result.Success)
             {
                 await ShowNotification("Sesión iniciada", "success");
+            }
+            else
+            {
+                await ShowNotification(result.Error?.Details ?? "Error desconocido", "error");
+            }
+        }
+        catch (Exception ex)
+        {
+            await ShowNotification($"Error: {ex.Message}", "error");
+        }
+    }
+
+    private async Task UpdateDisplayName()
+    {
+        if (!isJSReady) return;
+
+        try
+        {
+            var result = await JS.InvokeAsync<AuthResult>("FirebaseInterop.updateDisplayName", model.DisplayName);
+
+            if (result.Success)
+            {
+                await ShowNotification($"Nombre actualizado a {result.User.DisplayName}", "success");
+                CurrentUserState.SetUser(result.User);
+            }
+            else
+            {
+                await ShowNotification(result.Error?.Message ?? "Error desconocido", "error");
+            }
+        }
+        catch (JSException jsEx)
+        {
+            await ShowNotification($"Error JSInterop: {jsEx.Message}", "error");
+        }
+    }
+
+    private async Task Logout()
+    {
+        if (!isJSReady) return;
+
+        try
+        {
+            // Usar tipo específico en lugar de dynamic
+            var result = await JS.InvokeAsync<AuthResult>("FirebaseInterop.logout");
+
+            if (result.Success)
+            {
+                await ShowNotification("Sesión cerrada", "success");
             }
             else
             {

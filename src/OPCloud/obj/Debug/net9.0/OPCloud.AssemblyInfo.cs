@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OPCloud")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+acf1125cf924e29bd7812c4f879730c3870feece")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+259ab9da51f68870f6fb70d1758e60fd2712a8d2")]
 [assembly: System.Reflection.AssemblyProductAttribute("OPCloud")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OPCloud")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

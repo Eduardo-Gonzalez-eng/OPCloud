@@ -5,7 +5,8 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    onAuthStateChanged
+    onAuthStateChanged,
+    updateProfile
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -22,9 +23,15 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // Firebase Auth Functions
-export async function createUser(email, password) {
+export async function createUser(email, password, displayName = null) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+        // Si se pasa un displayName, lo actualizamos
+        if (displayName) {
+            await updateProfile(userCredential.user, { displayName });
+        }
+
         return {
             success: true,
             user: {
@@ -44,6 +51,40 @@ export async function createUser(email, password) {
         };
     }
 }
+
+export async function updateDisplayName(newName) {
+    try {
+        if (!auth.currentUser) {
+            return {
+                success: false,
+                error: {
+                    code: "no-user",
+                    message: "No hay usuario autenticado"
+                }
+            };
+        }
+
+        await updateProfile(auth.currentUser, { displayName: newName });
+
+        return {
+            success: true,
+            user: {
+                uid: auth.currentUser.uid,
+                email: auth.currentUser.email,
+                displayName: auth.currentUser.displayName
+            }
+        };
+    } catch (error) {
+        return {
+            success: false,
+            error: {
+                code: error.code || "unknown",
+                message: error.message || "Error desconocido"
+            }
+        };
+    }
+}
+
 
 export async function signIn(email, password) {
     try {
